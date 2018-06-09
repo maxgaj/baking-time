@@ -1,7 +1,7 @@
 package bakingtime.maxgaj.udacity.com.bakingtime.Model;
 
 public class Ingredient {
-    private long quantity;
+    private double quantity;
     private String measure;
     private String ingredient;
 
@@ -11,11 +11,11 @@ public class Ingredient {
         this.ingredient = ingredient;
     }
 
-    public long getQuantity() {
+    public double getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(long quantity) {
+    public void setQuantity(double quantity) {
         this.quantity = quantity;
     }
 
