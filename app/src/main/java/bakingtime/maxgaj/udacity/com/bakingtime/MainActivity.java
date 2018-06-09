@@ -1,11 +1,13 @@
 package bakingtime.maxgaj.udacity.com.bakingtime;
 
+import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
 import bakingtime.maxgaj.udacity.com.bakingtime.Model.Recipe;
 import bakingtime.maxgaj.udacity.com.bakingtime.network.BakingRetrofitClient;
 import bakingtime.maxgaj.udacity.com.bakingtime.network.BakingRetrofitInstance;
@@ -19,7 +21,12 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private List<Recipe> recipesList = new ArrayList<>();
+
     private RecyclerView recipeRecyclerView;
+    private View errorView;
+    private Button errorButton;
+    private ProgressBar loadingProgressBar;
+
     private RecipeAdapter recipeAdapter;
 
     @Override
@@ -27,9 +34,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        errorView = findViewById(R.id.error_view);
+        errorButton = findViewById(R.id.error_button);
+        errorButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getRecipeData();
+            }
+        });
+
+        loadingProgressBar = findViewById(R.id.pb_loading);
+
         recipeRecyclerView = (RecyclerView) findViewById(R.id.recipe_recyclerview);
-        recipeAdapter = new RecipeAdapter(recipesList);
-        RecyclerView.LayoutManager recipeLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recipeAdapter = new RecipeAdapter(this, recipesList);
+        RecyclerView.LayoutManager recipeLayoutManager;
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+            recipeLayoutManager = new GridLayoutManager(getApplicationContext(), 3);
+        else
+            recipeLayoutManager = new GridLayoutManager(getApplicationContext(), 1);
         recipeRecyclerView.setLayoutManager(recipeLayoutManager);
         recipeRecyclerView.setAdapter(recipeAdapter);
 
@@ -39,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getRecipeData(){
+        displayLoading();
         Retrofit retrofit = BakingRetrofitInstance.getRetrofit();
         BakingRetrofitClient retrofitClient = retrofit.create(BakingRetrofitClient.class);
         Call<List<Recipe>> call = retrofitClient.listRecipe();
@@ -47,13 +70,32 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
                 recipesList = response.body();
                 recipeAdapter.swapData(recipesList);
+                displayContent();
             }
 
             @Override
             public void onFailure(Call<List<Recipe>> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                displayError();
                 t.printStackTrace();
             }
         });
+    }
+
+    private void displayContent() {
+        recipeRecyclerView.setVisibility(View.VISIBLE);
+        errorView.setVisibility(View.INVISIBLE);
+        loadingProgressBar.setVisibility(View.INVISIBLE);
+    }
+
+    private void displayError() {
+        recipeRecyclerView.setVisibility(View.INVISIBLE);
+        errorView.setVisibility(View.VISIBLE);
+        loadingProgressBar.setVisibility(View.INVISIBLE);
+    }
+
+    private void displayLoading() {
+        recipeRecyclerView.setVisibility(View.INVISIBLE);
+        errorView.setVisibility(View.INVISIBLE);
+        loadingProgressBar.setVisibility(View.VISIBLE);
     }
 }

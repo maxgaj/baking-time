@@ -11,6 +11,10 @@ public class BakingRetrofitInstance {
     private static Retrofit retrofit;
     private static final String BASE_URL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/";
 
+    /* SOURCES:
+        https://square.github.io/retrofit/
+        http://www.vogella.com/tutorials/Retrofit/article.html
+     */
     public static Retrofit getRetrofit() {
         if (retrofit == null){
             // Uncomment line in retrofit builder to enable logging
