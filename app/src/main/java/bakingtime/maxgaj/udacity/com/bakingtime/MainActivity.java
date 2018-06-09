@@ -11,6 +11,8 @@ import android.widget.ProgressBar;
 import bakingtime.maxgaj.udacity.com.bakingtime.Model.Recipe;
 import bakingtime.maxgaj.udacity.com.bakingtime.network.BakingRetrofitClient;
 import bakingtime.maxgaj.udacity.com.bakingtime.network.BakingRetrofitInstance;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -22,10 +24,10 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private List<Recipe> recipesList = new ArrayList<>();
 
-    private RecyclerView recipeRecyclerView;
-    private View errorView;
-    private Button errorButton;
-    private ProgressBar loadingProgressBar;
+    @BindView(R.id.recipe_recyclerview) RecyclerView recipeRecyclerView;
+    @BindView(R.id.error_view) View errorView;
+    @BindView(R.id.error_button) Button errorButton;
+    @BindView(R.id.pb_loading) ProgressBar loadingProgressBar;
 
     private RecipeAdapter recipeAdapter;
 
@@ -33,9 +35,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
-        errorView = findViewById(R.id.error_view);
-        errorButton = findViewById(R.id.error_button);
         errorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -43,9 +44,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        loadingProgressBar = findViewById(R.id.pb_loading);
-
-        recipeRecyclerView = (RecyclerView) findViewById(R.id.recipe_recyclerview);
         recipeAdapter = new RecipeAdapter(this, recipesList);
         RecyclerView.LayoutManager recipeLayoutManager;
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)

@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import bakingtime.maxgaj.udacity.com.bakingtime.Model.Recipe;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -61,13 +63,12 @@ public class RecipeAdapter extends android.support.v7.widget.RecyclerView.Adapte
 
 
     public class RecipeViewHolder extends RecyclerView.ViewHolder {
-        public TextView nameTextView;
-        public ImageView thumbnailImageView;
+        @BindView(R.id.recipe_name) TextView nameTextView;
+        @BindView(R.id.recipe_thumbnail) ImageView thumbnailImageView;
 
         public RecipeViewHolder(View view){
             super(view);
-            nameTextView = (TextView) view.findViewById(R.id.recipe_name);
-            thumbnailImageView = (ImageView) view.findViewById(R.id.recipe_thumbnail);
+            ButterKnife.bind(this, view);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
