@@ -21,6 +21,12 @@
         <activity android:name=".StepActivity">
         </activity>
         <activity android:name=".MasterListActivity">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".MainActivity" />
+
+        </activity>
+        <activity android:name=".IngredientActivity">
         </activity>
     </application>
 

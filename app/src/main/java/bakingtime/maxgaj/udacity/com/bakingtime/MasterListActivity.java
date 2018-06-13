@@ -5,9 +5,15 @@ import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.widget.CardView;
+import android.view.View;
+import bakingtime.maxgaj.udacity.com.bakingtime.Model.Ingredient;
 import bakingtime.maxgaj.udacity.com.bakingtime.Model.Recipe;
 import bakingtime.maxgaj.udacity.com.bakingtime.Model.Step;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+import java.util.ArrayList;
 
 public class MasterListActivity extends AppCompatActivity implements MasterListFragment.OnStepClickListener {
     public static final String TWO_PANE = "twopane";
@@ -15,10 +21,13 @@ public class MasterListActivity extends AppCompatActivity implements MasterListF
     private Recipe recipe;
     private boolean twoPane;
 
+    @BindView(R.id.ingredient_cardview) CardView ingredientsCardView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_master_list);
+        ButterKnife.bind(this);
 
         if (savedInstanceState != null){
             twoPane = savedInstanceState.getBoolean(TWO_PANE);
@@ -28,6 +37,13 @@ public class MasterListActivity extends AppCompatActivity implements MasterListF
         if (intent != null && intent.hasExtra("Recipe"))
             this.recipe = intent.getParcelableExtra("Recipe");
 
+        ingredientsCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onIngredientsSelected();
+            }
+        });
+
         if (savedInstanceState == null) {
             MasterListFragment masterListFragment = new MasterListFragment();
             masterListFragment.setStepList(recipe.getSteps());
@@ -36,9 +52,10 @@ public class MasterListActivity extends AppCompatActivity implements MasterListF
 
             if (findViewById(R.id.master_list_divider) != null) {
                 twoPane = true;
-                StepFragment stepFragment = new StepFragment();
-                stepFragment.setStep(recipe.getSteps().get(0));
-                fragmentManager.beginTransaction().add(R.id.step_container, stepFragment).commit();
+                ArrayList<Ingredient> ingredientList = (ArrayList<Ingredient>) recipe.getIngredients();
+                IngredientFragment newIngredientFragment = new IngredientFragment();
+                newIngredientFragment.setIngredientlist(ingredientList);
+                getSupportFragmentManager().beginTransaction().add(R.id.step_container, newIngredientFragment).commit();
             } else {
                 twoPane = false;
             }
@@ -48,7 +65,6 @@ public class MasterListActivity extends AppCompatActivity implements MasterListF
     @Override
     public void onStepSelected(int position) {
         Step step = recipe.getSteps().get(position);
-        Log.d("TEST", "onStepSelected: twopane = " +twoPane);
         if (twoPane){
             StepFragment newStepFragment = new StepFragment();
             newStepFragment.setStep(step);
@@ -59,7 +75,24 @@ public class MasterListActivity extends AppCompatActivity implements MasterListF
             Context context = getApplicationContext();
             Class destination = StepActivity.class;
             Intent intent = new Intent(context, destination);
-            intent.putExtra("Step", step);
+            intent.putExtra("Recipe", recipe);
+            intent.putExtra("Position", position);
+            context.startActivity(intent);
+        }
+    }
+
+    public void onIngredientsSelected(){
+        ArrayList<Ingredient> ingredientList = (ArrayList<Ingredient>) recipe.getIngredients();
+        if (twoPane){
+            IngredientFragment newIngredientFragment = new IngredientFragment();
+            newIngredientFragment.setIngredientlist(ingredientList);
+            getSupportFragmentManager().beginTransaction().replace(R.id.step_container, newIngredientFragment).commit();
+        }
+        else {
+            Context context = getApplicationContext();
+            Class destination = IngredientActivity.class;
+            Intent intent = new Intent(context, destination);
+            intent.putExtra("Recipe", recipe);
             context.startActivity(intent);
         }
     }

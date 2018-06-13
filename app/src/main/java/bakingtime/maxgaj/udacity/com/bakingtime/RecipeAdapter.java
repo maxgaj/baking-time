@@ -47,7 +47,7 @@ public class RecipeAdapter extends android.support.v7.widget.RecyclerView.Adapte
                 .into(holder.thumbnailImageView);
         }
         else
-            holder.thumbnailImageView.setImageResource(R.drawable.ic_recipe_default);
+            holder.thumbnailImageView.setVisibility(View.GONE);
     }
 
     @Override
