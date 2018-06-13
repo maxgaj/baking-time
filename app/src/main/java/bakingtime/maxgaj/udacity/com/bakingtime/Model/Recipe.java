@@ -1,12 +1,16 @@
 package bakingtime.maxgaj.udacity.com.bakingtime.Model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class Recipe {
+public class Recipe implements Parcelable {
     private int id;
     private String name;
-    private List<Ingredient> ingredients;
-    private List<Step> steps;
+    private List<Ingredient> ingredients = new ArrayList<>();
+    private List<Step> steps = new ArrayList<>();
     private int servings;
     private String image;
 
@@ -17,6 +21,17 @@ public class Recipe {
         this.steps = steps;
         this.servings = servings;
         this.image = image;
+    }
+
+    private Recipe(Parcel in){
+        this.id = in.readInt();
+        this.name = in.readString();
+//        this.ingredients = in.readParcelable(Ingredient.class.getClassLoader());
+//        this.steps = in.readParcelable(Step.class.getClassLoader());
+        in.readList(this.ingredients, Ingredient.class.getClassLoader());
+        in.readList(this.steps, Step.class.getClassLoader());
+        this.servings = in.readInt();
+        this.image = in.readString();
     }
 
     public int getId() {
@@ -66,4 +81,29 @@ public class Recipe {
     public void setImage(String image) {
         this.image = image;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeString(name);
+        parcel.writeList(ingredients);
+        parcel.writeList(steps);
+        parcel.writeInt(servings);
+        parcel.writeString(image);
+    }
+
+    public static final Parcelable.Creator<Recipe> CREATOR = new Parcelable.Creator<Recipe>(){
+        public Recipe createFromParcel(Parcel in) {
+            return new Recipe(in);
+        }
+
+        public Recipe[] newArray(int size){
+            return new Recipe[size];
+        }
+    };
 }

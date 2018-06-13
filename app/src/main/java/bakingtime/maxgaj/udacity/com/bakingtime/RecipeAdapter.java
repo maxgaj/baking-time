@@ -1,13 +1,13 @@
 package bakingtime.maxgaj.udacity.com.bakingtime;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import bakingtime.maxgaj.udacity.com.bakingtime.Model.Recipe;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,7 +26,7 @@ public class RecipeAdapter extends android.support.v7.widget.RecyclerView.Adapte
 
     @Override
     public RecipeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recipe_card, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recipe, parent, false);
         return new RecipeViewHolder(view);
     }
 
@@ -72,8 +72,11 @@ public class RecipeAdapter extends android.support.v7.widget.RecyclerView.Adapte
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // TODO Intent
-                    Toast.makeText(context, recipesList.get(getAdapterPosition()).getName(), Toast.LENGTH_SHORT).show();
+                    Class destination = MasterListActivity.class;
+                    Recipe recipe = recipesList.get(getAdapterPosition());
+                    Intent intent = new Intent(context, destination);
+                    intent.putExtra("Recipe", recipe);
+                    context.startActivity(intent);
                 }
             });
         }
