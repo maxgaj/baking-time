@@ -9,7 +9,7 @@
     <FrameLayout
             android:id="@+id/step_container"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/step_container_height"
             android:layout_weight="1"/>
 
     <android.support.constraint.ConstraintLayout
@@ -23,8 +23,8 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_margin="5dp"
-                android:text="Previous"/>
+                android:layout_margin="@dimen/button_margin"
+                android:text="@string/button_previous"/>
 
         <Button
                 android:id="@+id/step_next_button"
@@ -32,8 +32,8 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_margin="5dp"
-                android:text="Next"/>
+                android:layout_margin="@dimen/button_margin"
+                android:text="@string/button_next"/>
 
     </android.support.constraint.ConstraintLayout>
 

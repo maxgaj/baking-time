@@ -35,9 +35,6 @@ public class RecipeAdapter extends android.support.v7.widget.RecyclerView.Adapte
         Recipe recipe = recipesList.get(position);
         holder.nameTextView.setText(recipe.getName());
 
-        //TODO custom image
-        // Sources
-        // Icons made by Freepik (http://www.freepik.com) from www.flaticon.com is licensed by CC 3.0 BY
         String thumbnailPath = recipe.getImage();
         if (thumbnailPath != null && !thumbnailPath.equals("")){
             Picasso.with(context)

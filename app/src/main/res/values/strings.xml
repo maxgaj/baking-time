@@ -5,4 +5,13 @@
     </string>
     <string name="error_button">Retry</string>
     <string name="ingredient_description">Ingredients</string>
+    <string name="button_next">Next</string>
+    <string name="button_previous">Previous</string>
+    <string name="appwidget_title">Baking Time</string>
+    <string name="appwidget_text">Ingredients</string>
+    <string name="add_widget">Add widget</string>
+    <string name="preference_recipe">PREF_RECIPE</string>
+    <string name="preference_recipe_id">PREF_RECIPE_ID</string>
+    <string name="widget_see_button">See Recipe</string>
+    <string name="widget_next_button">Next Recipe</string>
 </resources>

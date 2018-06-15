@@ -12,7 +12,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class IngredientFragment extends Fragment {
     private static final String INGREDIENTS_LIST = "ingredients_list";

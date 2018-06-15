@@ -11,6 +11,13 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+
+        <service android:name=".BakingTimeWidgetService"/>
+
+        <service
+            android:name=".ListViewService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -23,11 +30,20 @@
         <activity android:name=".MasterListActivity">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".MainActivity" />
-
+                    android:value=".MainActivity"/>
         </activity>
         <activity android:name=".IngredientActivity">
         </activity>
+
+        <receiver android:name=".BakingTimeWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+
+            <meta-data
+                    android:name="android.appwidget.provider"
+                    android:resource="@xml/baking_time_widget_provider_info"/>
+        </receiver>
     </application>
 
 </manifest>
