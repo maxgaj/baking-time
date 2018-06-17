@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.view.View;
+import android.widget.TextView;
 import bakingtime.maxgaj.udacity.com.bakingtime.Model.Ingredient;
 import bakingtime.maxgaj.udacity.com.bakingtime.Model.Recipe;
 import bakingtime.maxgaj.udacity.com.bakingtime.Model.Step;
@@ -22,6 +23,7 @@ public class MasterListActivity extends AppCompatActivity implements MasterListF
     private boolean twoPane;
 
     @BindView(R.id.ingredient_cardview) CardView ingredientsCardView;
+    @BindView(R.id.master_list_title) TextView titleTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,8 @@ public class MasterListActivity extends AppCompatActivity implements MasterListF
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("Recipe"))
             this.recipe = intent.getParcelableExtra("Recipe");
+
+        titleTextView.setText(this.recipe.getName());
 
         ingredientsCardView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -5,6 +5,15 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+    <TextView
+            android:id="@+id/ingredient_title"
+            android:textAlignment="center"
+            android:paddingTop="@dimen/master_list_padding"
+            android:textSize="@dimen/master_list_text"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
     <FrameLayout
             android:id="@+id/ingredients_container"
             android:layout_width="match_parent"
