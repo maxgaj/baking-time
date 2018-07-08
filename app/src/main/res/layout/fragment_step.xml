@@ -20,6 +20,21 @@
             android:layout_marginLeft="@dimen/exoplayer_margin_left"
             app:layout_constraintLeft_toLeftOf="parent" />
 
+    <ImageView
+        android:id="@+id/step_imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/exoplayer_margin_top"
+        android:layout_marginRight="@dimen/exoplayer_margin_right"
+        android:layout_marginStart="@dimen/exoplayer_margin_left"
+        android:layout_marginEnd="@dimen/exoplayer_margin_right"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="@dimen/exoplayer_margin_bottom"
+        app:layout_constraintBottom_toTopOf="@+id/step_text_view"
+        android:layout_marginLeft="@dimen/exoplayer_margin_left"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
           android:id="@+id/step_text_view"
           android:layout_width="match_parent"
